@@ -19,7 +19,16 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3.2'
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages(c("readr","dplyr","psych","GPArotation","survival","survminer","broom"), repos="https://cloud.r-project.org")'
+      - run: mkdir -p output
       - run: Rscript analysis/correlation_analysis.R
+      - name: Upload correlation results
+        uses: actions/upload-artifact@v3
+        with:
+          name: correlation-results
+          path: output/
 
   factor:
     if: contains(github.event.head_commit.message, 'factor') || contains(join(github.event.commits.*.modified, ','), 'analysis/factor_analysis.R') || contains(join(github.event.commits.*.modified, ','), 'data/R_factor_data.csv')
@@ -29,7 +38,16 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3.2'
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages(c("readr","dplyr","psych","GPArotation","survival","survminer","broom"), repos="https://cloud.r-project.org")'
+      - run: mkdir -p output
       - run: Rscript analysis/factor_analysis.R
+      - name: Upload factor results
+        uses: actions/upload-artifact@v3
+        with:
+          name: factor-results
+          path: output/
 
   survival:
     if: contains(github.event.head_commit.message, 'survival') || contains(join(github.event.commits.*.modified, ','), 'analysis/survival_analysis.R') || contains(join(github.event.commits.*.modified, ','), 'data/R_survival_data.csv')
@@ -39,4 +57,13 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3.2'
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages(c("readr","dplyr","psych","GPArotation","survival","survminer","broom"), repos="https://cloud.r-project.org")'
+      - run: mkdir -p output
       - run: Rscript analysis/survival_analysis.R
+      - name: Upload survival results
+        uses: actions/upload-artifact@v3
+        with:
+          name: survival-results
+          path: output/
