@@ -26,3 +26,5 @@ cat("Number of factors extracted:", num_factors, "\n")
 
 # Exit cleanly
 quit(save = "no")
+
+# Trigger factor test
