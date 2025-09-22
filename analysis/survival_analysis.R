@@ -43,3 +43,5 @@ cat("Habitat with lowest survival probability at ~400:", low_surv_habitat, "\n")
 
 # Exit cleanly
 quit(save = "no")
+
+# Trigger survival test
