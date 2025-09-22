@@ -25,3 +25,5 @@ cat("Most impactful factor:", most_impactful_factor, "\n")
 
 # Exit cleanly
 quit(save = "no")
+
+# Trigger re-run
