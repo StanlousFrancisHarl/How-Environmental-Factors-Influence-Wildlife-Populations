@@ -27,3 +27,5 @@ cat("Most impactful factor:", most_impactful_factor, "\n")
 
 # Ensure R exits cleanly
 quit(save = "no")
+
+# Run
