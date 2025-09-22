@@ -1,27 +1,28 @@
-# survival_analysis.R
+# factor_analysis.R
 library(readr)
-library(survival)
-library(survminer)
-library(dplyr)
-library(broom)
+library(psych)
+library(GPArotation)
 
-survival_data <- read_csv("R_survival_data.csv", show_col_types = FALSE)
+# Load dataset
+factor_data <- read_csv("data/R_factor_data.csv", show_col_types = FALSE)
 
-survival_fit <- survfit(Surv(Survival_Time, Censoring_Status) ~ Habitat, data = survival_data)
-survival_fit_df <- tidy(survival_fit)
+# Factor analysis
+num_factors <- 2
+EFA_model <- fa(factor_data, nfactors = num_factors)
 
-time_target <- 400
-survival_fit_df$Habitat <- gsub("Habitat=", "", survival_fit_df$strata)
-survival_fit_df$time_diff <- abs(survival_fit_df$time - time_target)
+# Ensure output folder exists
+if (!dir.exists("output")) dir.create("output")
 
-closest_times <- survival_fit_df %>%
-  group_by(Habitat) %>%
-  filter(time_diff == min(time_diff)) %>%
-  ungroup()
+# Save loadings
+write.csv(EFA_model$loadings[], "output/factor_loadings.csv")
 
-low_surv_row <- closest_times[which.min(closest_times$estimate), ]
-low_surv_habitat <- as.character(low_surv_row$Habitat)
+# Save summary
+sink("output/factor_summary.txt")
+print(EFA_model)
+sink()
 
-ggsurvplot(survival_fit, data = survival_data)
+# Print to logs
+cat("Number of factors extracted:", num_factors, "\n")
 
-cat("Habitat with lowest survival probability at ~400:", low_surv_habitat, "\n")
+# Exit cleanly
+quit(save = "no")
