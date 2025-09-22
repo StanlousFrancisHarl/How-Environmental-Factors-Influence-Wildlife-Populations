@@ -25,7 +25,7 @@ jobs:
       - run: mkdir -p output
       - run: Rscript analysis/correlation_analysis.R
       - name: Upload correlation results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: correlation-results
           path: output/
@@ -44,7 +44,7 @@ jobs:
       - run: mkdir -p output
       - run: Rscript analysis/factor_analysis.R
       - name: Upload factor results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: factor-results
           path: output/
@@ -63,7 +63,7 @@ jobs:
       - run: mkdir -p output
       - run: Rscript analysis/survival_analysis.R
       - name: Upload survival results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: survival-results
           path: output/
