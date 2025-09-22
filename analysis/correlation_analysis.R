@@ -2,7 +2,7 @@
 library(readr)
 library(dplyr)
 
-# Load dataset (correct path inside data/)
+# Load dataset
 factor_data <- read_csv("data/R_factor_data.csv", show_col_types = FALSE)
 
 # Correlation analysis
@@ -15,17 +15,13 @@ most_impactful_factor <- names(which.max(abs(cor_species)))
 # Ensure output folder exists
 if (!dir.exists("output")) dir.create("output")
 
-# Save detailed results
+# Save outputs
 write.csv(cor_species, "output/correlation_species.csv")
-
-# Save summary
 writeLines(paste("Most impactful factor:", most_impactful_factor),
            "output/correlation_summary.txt")
 
 # Print to logs
 cat("Most impactful factor:", most_impactful_factor, "\n")
 
-# Ensure R exits cleanly
+# Exit cleanly
 quit(save = "no")
-
-# Run
